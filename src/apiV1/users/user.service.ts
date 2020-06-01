@@ -8,6 +8,7 @@ import { CreateUserRequestModel } from '../../models/users/createUserRequestMode
 import { UserLoginRequestModel } from '../../models/users/userLoginRequestModel';
 import { UserModel } from '../../models/users/userResponseModel';
 import { UserLoginResponseModel } from '../../models/users/userLoginResponseModel';
+import { UserGetManyResponseModel } from '../../models/users/usersGetManyResponseModel';
 
 export default class UserService {
     createUser = async (createUserData: CreateUserRequestModel): Promise<UserModel> => {
@@ -46,6 +47,20 @@ export default class UserService {
         const queryUser = await User.findOne({_id: id});
         if (queryUser) return queryUser;
     };
+
+    getMany = async (pageNumber: string, countItems: string): Promise<UserGetManyResponseModel> => {
+        let number: any = pageNumber || 1;
+        let count: any = countItems || 5;
+        number = parseFloat(number);
+        count = parseFloat(count);
+        console.log('number - ', number, 'count - ', count);
+        const allCount = await User.count({});
+        const users = await User.find({}).skip(count * number - count).limit(count);
+        return {
+            allCount,
+            users
+        }
+    }
 
     remove = async (id: string): Promise<void> => {
         await User.findOneAndRemove({_id: id});

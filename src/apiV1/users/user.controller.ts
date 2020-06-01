@@ -13,11 +13,26 @@ export default class UserController {
     }
 
     findMany = async (req: Request, res: Response): Promise<Response> => {
-        return
+        try {
+            let number: string = req.query.number.toString();
+            let count: string = req.query.count.toString();
+            const userData = await this.userService.getMany(number, count);
+            return res.status(200).send(userData);
+        } catch (error) {
+            return res.status(500).send(error.toString());
+        }
     };
 
     findOne = async (req: Request, res: Response): Promise<Response> => {
-        return
+        try {
+            const queryUser = await this.userService.getById(req.body.id);
+            if(!queryUser) {
+                return res.status(404).send('User not found!');
+            };
+            return res.status(200).send(queryUser);
+        } catch (error) {
+            return res.status(500).send(error.toString());
+        }
     };
 
     create = async (req: Request, res: Response): Promise<Response> => {

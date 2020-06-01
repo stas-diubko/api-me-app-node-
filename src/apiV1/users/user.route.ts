@@ -12,7 +12,7 @@ const controller = new Controller(userService, rolesService);
 
 user.get('/', verifyToken, verifyAdmin, controller.findMany);
 
-user.get('/:id', verifyToken, controller.findOne);
+user.get('/getOne', verifyToken, controller.findOne);
 
 user.post('/', controller.create);
 
