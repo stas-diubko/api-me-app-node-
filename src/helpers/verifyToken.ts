@@ -5,7 +5,7 @@ import UserService from '../apiV1/users/user.service';
 var userService = new UserService();
 
 const verifyToken = async (req, res, next): Promise<Response> => {
-  const token: string = req.headers.authorization.split(" ")[1];
+  const token: string = req.headers.authorization ? req.headers.authorization.split(" ")[1] : null;
   if (!token) {
     return res.status(403).send({ auth: false, message: "No token provided." });
   }
