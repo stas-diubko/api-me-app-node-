@@ -25,7 +25,8 @@ export default class UserController {
 
     findOne = async (req: Request, res: Response): Promise<Response> => {
         try {
-            const queryUser = await this.userService.getById(req.body.id);
+            const userId: string = req.query.userId.toString();
+            const queryUser = await this.userService.getById(userId);
             if(!queryUser) {
                 return res.status(404).send('User not found!');
             };
