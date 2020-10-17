@@ -8,5 +8,6 @@ const notesService = new NotesService;
 const notesController = new NotesController(notesService);
 
 note.post('/', verifyToken, notesController.create);
+note.get('/', verifyToken, notesController.findById);
 
 export default note;

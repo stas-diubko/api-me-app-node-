@@ -16,4 +16,13 @@ export default class NotesController {
             return res.status(500).send(error.toString());
         };
     };
+    findById = async (req: Request, res: Response) => {
+        try {
+            const userId: string = req.query.userId.toString();
+            const notes = await this.notesService.getNotesById(userId);
+            return res.status(200).send(notes);
+        } catch (error) {
+            return res.status(500).send(error.toString());
+        };
+    };
 };

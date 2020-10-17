@@ -9,4 +9,8 @@ export default class NotesService {
         });
         return await note.save();
     };
-}
+    getNotesById = async (userId: string): Promise<any> => {
+        const notes = await Note.find({ userId });
+        return notes;
+    };
+};
